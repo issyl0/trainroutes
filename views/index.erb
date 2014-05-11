@@ -1,1 +1,21 @@
 <p>Bored of having to specify two train stations when you travel? Want to know where you can get to from station X? Look no further!</p>
+
+<form id="search" class="form-horizontal" action="/search" method="post">
+  <div class="control-group">
+    <label for="station_name">Station Name</label>
+    <div class="controls">
+      <input class="span5" type="text" name="station_name"></input>
+    </div>
+  </div>
+  <br />
+  <label for="departure_station">Departure Station?</label>
+  <input type="checkbox" name="departure_station"></input>
+  <br />
+  <label for="arrival_station">Arrival Station?</label>
+  <input type="checkbox" name="arrival_station"></input>
+  <div class="control-group">
+    <div class="controls">
+      <input id='search_button' name='search' type='submit' value='Search'></input>
+    </div>
+  </div>
+</form>
