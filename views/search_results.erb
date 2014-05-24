@@ -1,0 +1,7 @@
+<p>You can travel via <%= Station.where(abbr: $selected_station).first.name %> to the following destinations:</p>
+
+<ul>
+  <% $stopping_stations.uniq.each do |station| %>
+    <li><%= station %></li>
+  <% end %>
+</ul>
