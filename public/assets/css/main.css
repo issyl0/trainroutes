@@ -6,3 +6,6 @@ ul li {
   list-style: none;  
 }
 
+.navbar-default {
+	background-color: #8ee1e4;
+}
