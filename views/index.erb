@@ -5,7 +5,11 @@
     <div class="control-group">
       <label for="station_name">Station Name</label>
       <div class="controls">
-        <input class="span5" type="text" name="station_name"></input>
+        <select id="stations" class="span5" type="text" name="station_name">
+        <% Station.all.each do |station| %>
+          <option><%= station.name %> (<%= station.abbr %>)</option>
+        <% end %>
+        </select>
       </div>
     </div>
     <br />
@@ -21,3 +25,11 @@
     </div>
   </form>
 </div>
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+<script>
+  /* Set the element on which Chosen is active. No point having
+     this one line in a separate file. */
+  $("#stations").chosen();
+</script>

@@ -7,7 +7,7 @@ require './models/station.rb'
 
 helpers do
   def find_station(station)
-    Station.where(name: station).first || Station.where(abbr: station).first
+    Station.where(name: station).first
   end
 
   def scrape_national_rail(station_abbr,dep=nil)
@@ -40,7 +40,7 @@ end
 
 post '/search' do
   # Check that the requested station exists.
-  if station_abbr = find_station(params[:station_name]).abbr
+  if station_abbr = find_station(params[:station_name].split('(')[0]).abbr
     if params[:arrival_station] == 'on'
       scrape_national_rail(station_abbr)
     elsif params[:departure_station] == 'on'
