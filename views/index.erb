@@ -5,7 +5,11 @@
     <div class="control-group">
       <label for="station_name">Station Name</label>
       <div class="controls">
-        <input class="span5" type="text" name="station_name"></input>
+        <select class="span5" type="text" name="station_name">
+        <% Station.all.each do |station| %>
+          <option><%= station.name %> (<%= station.abbr %>)</option>
+        <% end %>
+        </select>
       </div>
     </div>
     <br />
