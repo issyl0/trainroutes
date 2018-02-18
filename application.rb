@@ -22,7 +22,7 @@ helpers do
     # Get the end destination of the train.
     nr.css("#live-departure-board > #{structure} > td.destination").each do |destination|
       @stopping_stations.push(destination.text.strip)
-      
+
       # Find the stations it stops at on its way to its destination.
       nr.css("#live-departure-board > #{structure} > td > a").each do |detail_url|
         du = Nokogiri::HTML.parse(open("#{nr_base_url}#{detail_url['href']}"))
