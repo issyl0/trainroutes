@@ -1,12 +1,13 @@
 require 'csv'
+require 'rest-client'
 
 namespace :import do
   desc 'Import the list of current UK railway stations.'
   task :stations do
-    CSV.foreach('public/assets/files/station_codes.csv', { :headers => true }) do |station|
-      if !Station.where(name: station[0]).first
-        Station.create(name: station[0], abbr: station[1])
-      end
+    CSV.parse(RestClient.get('https://www.nationalrail.co.uk/static/documents/content/station_codes.csv').body).each do |name, abbr|
+      next if name == "Station Name" && abbr == "CRS Code"
+
+      Station.create(name: name, abbr: abbr) unless Station.find_by(name: name)
     end
     puts "Stations created."
   end
