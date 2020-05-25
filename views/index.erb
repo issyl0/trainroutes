@@ -26,10 +26,10 @@
   </form>
 </div>
 
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/chosen/1.1.0/chosen.jquery.min.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js"></script>
 <script>
-  /* Set the element on which Chosen is active. No point having
-     this one line in a separate file. */
-  $("#stations").chosen();
+  $(document).ready(function() {
+    $('#stations').select2();
+  });
 </script>
