@@ -1,7 +1,0 @@
-adapter: 'postgresql'
-encoding: utf8
-database: <%= ENV['DB_NAME'] || 'trainroutes' %>
-username: <%= ENV['DB_USERNAME'] || 'trainroutes' %>
-password: <%= ENV['DB_PASSWORD'] || 'trainroutes' %>
-host: <%= ENV['DB_HOSTNAME'] || 'localhost' %>
-port: <%= ENV['DB_PORT'] || 5432 %>
