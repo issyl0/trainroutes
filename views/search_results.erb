@@ -8,6 +8,6 @@
     </ul>
   <% else %>
     <p>There are no trains at the moment from <%= Station.where(abbr: @selected_station).first.name %>.
-      Try again later, or <a href="/search">search again</a>.</p>
+      Try again later, or <a href="/">search again</a>.</p>
   <% end %>
 </div>

@@ -1,7 +1,7 @@
 adapter: 'postgresql'
 encoding: utf8
-database: <%= ENV['RDS_DB_NAME'] || 'trainroutes' %>
-username: <%= ENV['RDS_USERNAME'] || 'trainroutes' %>
-password: <%= ENV['RDS_PASSWORD'] || '' %>
-host: <%= ENV['RDS_HOSTNAME'] || 'localhost' %>
-port: <%= ENV['RDS_PORT'] || 5432 %>
+database: <%= ENV['DB_NAME'] || 'trainroutes' %>
+username: <%= ENV['DB_USERNAME'] || 'trainroutes' %>
+password: <%= ENV['DB_PASSWORD'] || 'trainroutes' %>
+host: <%= ENV['DB_HOSTNAME'] || 'localhost' %>
+port: <%= ENV['DB_PORT'] || 5432 %>
