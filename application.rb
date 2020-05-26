@@ -40,7 +40,7 @@ end
 
 post '/search' do
   # Check that the requested station exists.
-  if station_abbr = find_station(params[:station_name].split('(')[0].strip).abbr
+  if station_abbr = find_station(params[:station_name].split('[')[0].strip).abbr
     if params[:arrival_station] == 'on'
       scrape_national_rail(station_abbr)
     elsif params[:departure_station] == 'on'
