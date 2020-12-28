@@ -16,7 +16,7 @@ helpers do
     nr_board = "service/ldbboard"
     @stopping_stations = []
 
-    nr = Nokogiri::HTML.parse(open("#{nr_base_url}/#{nr_board}/#{dep ? 'dep' : 'arr'}/#{station_abbr}"))
+    nr = Nokogiri::HTML.parse(URI.open("#{nr_base_url}/#{nr_board}/#{dep ? 'dep' : 'arr'}/#{station_abbr}"))
     structure = "div.results.trains > div.tbl-cont > table > tbody > tr"
 
     # Get the end destination of the train.
@@ -25,7 +25,7 @@ helpers do
 
       # Find the stations it stops at on its way to its destination.
       nr.css("#live-departure-board > #{structure} > td > a").each do |detail_url|
-        du = Nokogiri::HTML.parse(open("#{nr_base_url}#{detail_url['href']}"))
+        du = Nokogiri::HTML.parse(URI.open("#{nr_base_url}#{detail_url['href']}"))
         du.css("#live-departure-details > #{structure} > td.station").each do |stopping_station|
           @stopping_stations.push(stopping_station.text.strip)
         end
