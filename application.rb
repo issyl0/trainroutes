@@ -1,3 +1,5 @@
+# frozen_string_literal: true
+
 require 'csv'
 require 'nokogiri'
 require 'open-uri'
@@ -6,8 +8,8 @@ require 'sinatra'
 helpers do
   def stations
     station_list = {}
-    CSV.foreach("public/uk_national_rail_stations.csv") do |name, abbr|
-      next if name == "Station Name" && abbr == "CRS Code"
+    CSV.foreach('public/uk_national_rail_stations.csv') do |name, abbr|
+      next if name == 'Station Name' && abbr == 'CRS Code'
 
       station_list[abbr] = name
     end
@@ -15,14 +17,14 @@ helpers do
     station_list
   end
 
-  def scrape_national_rail(station_abbr,dep=nil)
+  def scrape_national_rail(station_abbr, dep = nil)
     @selected_station = stations[station_abbr]
-    nr_base_url = "https://ojp.nationalrail.co.uk"
-    nr_board = "service/ldbboard"
+    nr_base_url = 'https://ojp.nationalrail.co.uk'
+    nr_board = 'service/ldbboard'
     @stopping_stations = []
 
-    nr = Nokogiri::HTML.parse(URI.open("#{nr_base_url}/#{nr_board}/#{dep ? 'dep' : 'arr'}/#{station_abbr}"))
-    structure = "div.results.trains > div.tbl-cont > table > tbody > tr"
+    nr = Nokogiri::HTML.parse(URI.parse("#{nr_base_url}/#{nr_board}/#{dep ? 'dep' : 'arr'}/#{station_abbr}").open)
+    structure = 'div.results.trains > div.tbl-cont > table > tbody > tr'
 
     # Get the end destination of the train.
     nr.css("#live-departure-board > #{structure} > td.destination").each do |destination|
@@ -30,7 +32,7 @@ helpers do
 
       # Find the stations it stops at on its way to its destination.
       nr.css("#live-departure-board > #{structure} > td > a").each do |detail_url|
-        du = Nokogiri::HTML.parse(URI.open("#{nr_base_url}#{detail_url['href']}"))
+        du = Nokogiri::HTML.parse(URI.parse("#{nr_base_url}#{detail_url['href']}").open)
         du.css("#live-departure-details > #{structure} > td.station").each do |stopping_station|
           @stopping_stations.push(stopping_station.text.strip)
         end
@@ -50,7 +52,7 @@ post '/search' do
     if params[:arrival_station] == 'on'
       scrape_national_rail(station_abbr)
     elsif params[:departure_station] == 'on'
-      scrape_national_rail(station_abbr,'dep')
+      scrape_national_rail(station_abbr, 'dep')
     end
   end
   erb :search_results
