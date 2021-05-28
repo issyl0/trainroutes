@@ -1,10 +1,6 @@
 source 'https://rubygems.org'
 ruby '3.0.1'
 
-gem 'sinatra'
-gem 'activerecord'
-gem 'sinatra-activerecord'
-gem 'rake'
-gem 'rest-client'
 gem 'nokogiri'
-gem 'pg'
+gem 'rest-client'
+gem 'sinatra'

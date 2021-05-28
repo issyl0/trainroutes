@@ -6,8 +6,8 @@
       <label for="station_name">Station Name</label>
       <div class="controls">
         <select id="stations" class="span5" type="text" name="station_name">
-        <% Station.all.each do |station| %>
-          <option><%= station.name %> [<%= station.abbr %>]</option>
+        <% stations.each do |abbr, name| %>
+          <option><%= name %> [<%= abbr %>]</option>
         <% end %>
         </select>
       </div>

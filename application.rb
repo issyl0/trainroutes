@@ -1,17 +1,22 @@
-require 'sinatra'
-require 'sinatra/activerecord'
+require 'csv'
 require 'nokogiri'
 require 'open-uri'
-
-require './models/station.rb'
+require 'sinatra'
 
 helpers do
-  def find_station(station)
-    Station.where(name: station).first
+  def stations
+    station_list = {}
+    CSV.foreach("public/uk_national_rail_stations.csv") do |name, abbr|
+      next if name == "Station Name" && abbr == "CRS Code"
+
+      station_list[abbr] = name
+    end
+
+    station_list
   end
 
   def scrape_national_rail(station_abbr,dep=nil)
-    @selected_station = station_abbr
+    @selected_station = stations[station_abbr]
     nr_base_url = "http://ojp.nationalrail.co.uk"
     nr_board = "service/ldbboard"
     @stopping_stations = []
@@ -39,8 +44,9 @@ get '/' do
 end
 
 post '/search' do
-  # Check that the requested station exists.
-  if station_abbr = find_station(params[:station_name].split('[')[0].strip).abbr
+  station_abbr = params[:station_name].split('[')[1].split(']')[0].strip
+
+  if stations[station_abbr]
     if params[:arrival_station] == 'on'
       scrape_national_rail(station_abbr)
     elsif params[:departure_station] == 'on'
