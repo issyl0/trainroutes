@@ -17,7 +17,7 @@ helpers do
 
   def scrape_national_rail(station_abbr,dep=nil)
     @selected_station = stations[station_abbr]
-    nr_base_url = "http://ojp.nationalrail.co.uk"
+    nr_base_url = "https://ojp.nationalrail.co.uk"
     nr_board = "service/ldbboard"
     @stopping_stations = []
 
