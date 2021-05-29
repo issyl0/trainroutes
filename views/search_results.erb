@@ -7,7 +7,7 @@
       <% end %>
     </ul>
   <% else %>
-    <p>There are no trains at the moment from <%= @selected_station %>.
+    <p>There are no trains at the moment <%= @direction == 'dep' ? 'from' : 'to' %> <%= @selected_station %>.
       Try again later, or <a href="/">search again</a>.</p>
   <% end %>
 </div>

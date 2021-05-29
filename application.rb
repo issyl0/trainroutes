@@ -17,7 +17,8 @@ helpers do
     station_list
   end
 
-  def scrape_national_rail(station_abbr, dep = nil)
+  def scrape_national_rail(station_abbr, direction)
+    @direction = direction
     @selected_station = stations[station_abbr]
     nr_base_url = 'https://ojp.nationalrail.co.uk'
     nr_board = 'service/ldbboard'
@@ -49,11 +50,12 @@ post '/search' do
   station_abbr = params[:station_name].split('[')[1].split(']')[0].strip
 
   if stations[station_abbr]
-    if params[:arrival_station] == 'on'
-      scrape_national_rail(station_abbr)
-    elsif params[:departure_station] == 'on'
-      scrape_national_rail(station_abbr, 'dep')
-    end
+    direction = if params[:arrival_station] == 'on'
+                  'arr'
+                elsif params[:departure_station] == 'on'
+                  'dep'
+                end
+    scrape_national_rail(station_abbr, direction)
   end
   erb :search_results
 end
