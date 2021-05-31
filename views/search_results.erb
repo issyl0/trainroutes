@@ -2,7 +2,7 @@
   <% if !@stopping_stations.empty? %>
     <p>You can travel via <%= @selected_station %> to the following destinations:</p>
     <ul>
-      <% @stopping_stations.uniq.each do |station| %>
+      <% @stopping_stations.each do |station| %>
         <li><%= station %></li>
       <% end %>
     </ul>

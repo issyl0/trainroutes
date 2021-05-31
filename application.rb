@@ -22,7 +22,7 @@ helpers do
     @selected_station = stations[station_abbr]
     nr_base_url = 'https://ojp.nationalrail.co.uk'
     nr_board = 'service/ldbboard'
-    @stopping_stations = []
+    @stopping_stations = Set.new
 
     begin
       nr = Nokogiri::HTML.parse(URI.parse("#{nr_base_url}/#{nr_board}/#{direction}/#{station_abbr}").open)
@@ -30,13 +30,13 @@ helpers do
 
       # Get the end destination of the train.
       nr.css("#live-departure-board > #{structure} > td.destination").each do |destination|
-        @stopping_stations.push(destination.text.strip)
+        @stopping_stations << destination.text.strip
 
         # Find the stations it stops at on its way to its destination.
         nr.css("#live-departure-board > #{structure} > td > a").each do |detail_url|
           du = Nokogiri::HTML.parse(URI.parse("#{nr_base_url}#{detail_url['href']}").open)
           du.css("#live-departure-details > #{structure} > td.station").each do |stopping_station|
-            @stopping_stations.push(stopping_station.text.strip)
+            @stopping_stations << stopping_station.text.strip
           end
         end
       end
